@@ -203,6 +203,15 @@
     font-size: 14px;
 }
 
+.logout-button {
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
 /* FORM STYLES */
 *,
 *::after,

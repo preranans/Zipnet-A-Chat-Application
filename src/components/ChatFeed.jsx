@@ -5,6 +5,7 @@ import MessageForm from './MessageForm';
 const ChatFeed = (props) => {
     const { chats, activeChat, userName, messages } = props;
     const chat = chats && chats[activeChat];
+
     const renderReadReceipts = (message, isMyMessage) => chat.people.map((person, index) => person.last_read === message.id && (
         <div
             key={`read_${index}`}
@@ -15,6 +16,7 @@ const ChatFeed = (props) => {
             }}
         />
     ));
+
     const renderMessages = () => {
         const keys = Object.keys(messages);
         return keys.map((key, index) => {
@@ -26,7 +28,7 @@ const ChatFeed = (props) => {
                 <div key={`msg_${index}`} style={{ width: '100%' }}>
                     <div className="message-block">
                         {isMyMessage
-                            ? <MyMessage message={message} /> //passing as prop
+                            ? <MyMessage message={message} />
                             : <TheirMessage message={message} lastMessage={messages[lastMessageKey]} />}
                     </div>
                     <div className="read-receipts" style={{ marginRight: isMyMessage ? '18px' : '0px', marginLeft: isMyMessage ? '0px' : '68px' }}>
@@ -36,7 +38,15 @@ const ChatFeed = (props) => {
             );
         });
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('password');
+        window.location.reload();
+    };
+
     if (!chat) return <div />;
+
     return (
         <div className="chat-feed">
             <div className="chat-title-container">
@@ -44,6 +54,9 @@ const ChatFeed = (props) => {
                 <div className="chat-subtitle">
                     {chat.people.map((person) => ` ${person.person.username}`)}
                 </div>
+                <button onClick={handleLogout} className="logout-button">
+                    Logout
+                </button>
             </div>
             {renderMessages()}
             <div style={{ height: '100px' }} />
@@ -53,4 +66,5 @@ const ChatFeed = (props) => {
         </div>
     );
 };
+
 export default ChatFeed;
